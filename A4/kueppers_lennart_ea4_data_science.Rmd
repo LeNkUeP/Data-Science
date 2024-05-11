@@ -1,0 +1,61 @@
+---
+title: "EA4_data_science"
+author: "kueppers_lennart"
+date: "2024-05-11"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Data
+
+```{r}
+library(ggplot2)
+data("iris")
+head(iris)
+```
+
+# Scatter Plot for sepal width and length
+
+```{r}
+ggplot(data=iris,aes(x=Sepal.Length, y=Sepal.Width,color=Species)) + geom_point() + theme_minimal()
+```
+
+# Regression line for the whole dataset
+
+```{r}
+ggplot(data=iris,mapping=aes(x=Sepal.Length,y=Sepal.Width)) + geom_point() + geom_smooth(method="lm")
+```
+
+# Pearson correlation
+
+```{r}
+cor(iris$Sepal.Length, iris$Sepal.Width, method = 'pearson')
+```
+
+# Boxplot of Petal Width
+
+```{r}
+ggplot(data=iris,aes(x=Species, y=Petal.Width,color=Species)) + geom_boxplot() + theme_minimal() + theme(legend.position="none")
+```
+
+# Histogram of Petal Width
+
+```{r}
+ggplot(data=iris, aes(x=Petal.Width))+
+  geom_histogram(aes(fill=Species)) + 
+  xlab("Petal Width") +  
+  ylab("Frequency")
+```
+
+# T-Test
+
+```{r}
+t.test(Petal.Width ~ Species,iris,Species %in% c("setosa", "virginica"))
+```
+
+# Conclusion
+
+Der p-Wert ist mit p < 2.2e-16 unter dem typischen Alphaniveau von 0,05. Man verwirft also die Nullhypothese von Gleichheit der Gruppenmittelwerte. Die Alternativhypothese “true difference in means between group setosa and group virginica is not equal to 0” wird angenommen. Demzufolge gehen wir von statistisch signifikanten Unterschieden hinsichtlich der Petal Width bei den Spezien Setosa und Virginica aus.
